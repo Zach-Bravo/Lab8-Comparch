@@ -1,0 +1,41 @@
+-Start- 
+force clk 0 0ps, 1 50ps -repeat 100ps
+force reset 1
+run
+
+force reset 0
+
+-Xtra-
+
+quit -sim
+
+-Functions-
+
+*Addi*
+
+force ALUsrc 1 -> IMM
+force RegWrite 1 -> Write To Reg
+force MemRW 0 -> Don't Write in Mem
+force MemtoReg 0 -> Send Result Back
+force PCsrc 0 -> +4
+force opcode 0001 -> Add
+
+run
+
+*SW*
+(CHECK RISC-V To See how to add IMM val to spot)
+force ALUsrc 0 -> RS2
+force RegWrite 0 -> Don't Write to Reg
+force MemRW 1 -> Don't Write in Mem
+force MemtoReg 0 -> Doesn't matter, but do 0 to show finalout
+force PCsrc 0 -> +4
+force opcode 0001 -> Doesn't Matter, Might
+
+*LW*
+
+force ALUsrc 0 -> RS2
+force RegWrite 1 -> Write To Reg
+force MemRW 0 -> Don't Write in Mem
+force MemtoReg 1 -> Send RS2 Mem Value Back
+force PCsrc 0 -> +4
+force opcode 0001 -> Add, Check Agane For LW Imm Val
