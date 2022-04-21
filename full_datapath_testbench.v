@@ -32,16 +32,16 @@ initial begin
 	clk = 0;
 
 	
-	#50;
+	#150;
 	
 	clk = 1;
 	
-	#50;
+	#150;
 	
 	clk = 0;
 	reset = 0;
 	
-	#50;
+	#150;
 	
 	//Setup
 	
@@ -55,14 +55,14 @@ initial begin
 	opcode = 0001;
 	MemRW = 0;
 	
-	#50;
+	#150;
 	
 	clk = 0;
 	
-	#50;
+	#150;
 	
 	
-	//Test Addi save to mem
+	//Test Addi save to Reg
 	
 	clk = 1;
 	reset = 0;
@@ -72,27 +72,44 @@ initial begin
 	MemtoReg = 0;
 	PCsrc = 0;
 	opcode = 0001;
-	MemRW = 1;
+	MemRW = 0;
 	
-	#50;
+	#150;
 	
 	clk = 0;
 	
 	/*
-	ALUsrc = 1;
+	#150;
+	
+	clk = 1;
+	
+	#150;
+	
+	clk = 0;*/
+	
+	//Test SW
+	
+	#150;
+	
+	clk = 1;
+	
+	ALUsrc = 1; //Used for 0(x14) but IMM will always = 13 as the reg accessed is 13
 	RegWrite = 0;
 	MemtoReg = 1;
 	PCsrc = 0;
 	opcode = 0001;
-	MemRW = 0;
-	*/
+	MemRW = 1;
 	
+	#150;
+	
+	
+	clk = 0;
 	
 	//Test LW -> ALU opcode and other doesn't matter, check datapath block 
 	//memtoreg should be 1
 	//RegWrite should be 1
 	//All else should be 0
-	#50;
+	#150;
 	
 	clk = 1;
 	
@@ -103,20 +120,37 @@ initial begin
 	opcode = 0001;
 	MemRW = 0;
 	
-	#50;
+	#150;
 	
 	clk = 0;
 	
 	
-	#50;
+	#150;
 	
 	clk = 0;
 	
-	#50;
+	#150;
 	
 	$stop;
 	
 
 end
+
+
+wire [31:0] PC_address, ROMout, Read1, Read2, RS2_full, IMM_full, RAMout, result;
+wire [4:0] RD, RS1, RS2;
+
+
+assign PC_address = dut.PC_address;
+assign ROMout = dut.ROMout;
+assign Read1 = dut.Read1;
+assign Read2 = dut.Read2;
+assign RS2_full = dut.RS2_full;
+assign IMM_full = dut.IMM_full;
+assign RD = dut.RD;
+assign RS1 = dut.RS1;
+assign RS2 = dut.RS2;
+assign RAMout = dut.RAMout;
+assign result = dut.result;
 
 endmodule 
